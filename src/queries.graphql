@@ -1,0 +1,114 @@
+# Write your query or mutation here
+query GetFeeds {
+  feed {
+    links {
+      id
+      url
+      description
+    }
+  }
+}
+
+mutation PostLink {
+  post(url: "www.prisma.com", description: "Testing TTTTTT authorization") {
+    id
+    postedBy {
+      name
+    }
+  }
+}
+
+mutation SignUp {
+  signup(name: "Alice", email: "alice@prisma.io", password: "graphql") {
+    token
+    user {
+      id
+    }
+  }
+}
+
+mutation Login {
+  login(email: "alice@prisma.io", password: "graphql") {
+    token
+    user {
+      email
+      links {
+        url
+        description
+      }
+    }
+  }
+}
+
+subscription NewLink {
+  newLink {
+    id
+    url
+    description
+    postedBy {
+      # id
+      name
+      email
+    }
+  }
+}
+
+subscription NewVote {
+  newVote {
+    id
+    link {
+      id
+      url
+      description
+    }
+    user {
+      name
+      email
+    }
+  }
+}
+
+mutation Vote {
+  vote(linkId: 16) {
+    link {
+      id
+      url
+      description
+    }
+    user {
+      name
+      email
+    }
+  }
+}
+
+query FeedPaginated {
+  feed(skip: 9, take: 5) {
+    links {
+      id
+      description
+      url
+    }
+  }
+}
+
+query FeedOrdered {
+  feed(orderBy: { createdAt: asc }) {
+    links {
+      id
+      description
+      url
+    }
+  }
+}
+
+query FeedCount {
+  feed (take: 5) {
+    count
+    links {
+      id
+      description
+      url
+    }
+  }
+}
